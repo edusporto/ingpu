@@ -26,7 +26,7 @@
 #include <thrust/adjacent_difference.h>
 #include <thrust/random.h>
 #include <thrust/functional.h>
-#include <thrust\logical.h>
+#include <thrust/logical.h>
 #include <thrust/remove.h>
 #include <thrust/partition.h>
 #include <thrust/device_ptr.h>

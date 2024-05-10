@@ -13,8 +13,8 @@
 #include <boost/spirit/include/phoenix_operator.hpp>
 #include <boost/spirit/include/phoenix_stl.hpp>
 #include <boost/spirit/include/phoenix_object.hpp>
-#include <boost\fusion\include\adapt_struct.hpp>
-#include <boost\fusion\include\io.hpp>
+#include <boost/fusion/include/adapt_struct.hpp>
+#include <boost/fusion/include/io.hpp>
 #include "agent_struct.h"
 #include "soa/agent.h"
 
@@ -23,7 +23,7 @@
 #include <iomanip>
 #include <unordered_map>
 
-using namespace std::tr1;
+// using namespace std::tr1;
 using namespace std;
 using namespace ingpu;
 

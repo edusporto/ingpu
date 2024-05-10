@@ -1,11 +1,11 @@
 #pragma once
 
-#include <thrust\host_vector.h>
+#include <thrust/host_vector.h>
 //#include "agent.h"
 #include "../result_info.h"
 
 
-using namespace thrust;
+// using namespace thrust;
 
 namespace soa {
 

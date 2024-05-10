@@ -2,16 +2,17 @@
 #include "parse_net.h"
 #include "kernel.h"
 #include "config_manager.h"
-#include <stopwatch.h>
-#include <stopwatch_win.h>
-#include <conio.h>
+#include "stopwatch.hpp"
+// #include <stopwatch.h>
+// #include <stopwatch_win.h>
+// #include <conio.h>
 #include <thrust/tuple.h>
 #include "soa/kernel_soa.h"
 #include <fstream>
 
 using namespace ingpu;
 using namespace std;
-using namespace thrust;
+using namespace stopwatch;
 
 void eval_single(thrust::host_vector<ingpu::Agent>& in_lhs_host, thrust::host_vector<ingpu::Agent>& in_rhs_host)
 {
@@ -25,8 +26,7 @@ void eval_single(thrust::host_vector<ingpu::Agent>& in_lhs_host, thrust::host_ve
 	bool partition = config_manager::get_bool("partition");
 
 	//timer
-	const unsigned int mywatch = StopWatch::create();
-	StopWatch::get(mywatch).start();
+	auto mywatch = Stopwatch();
 
 	/* ----------------
 	// interaction loop
@@ -44,12 +44,11 @@ void eval_single(thrust::host_vector<ingpu::Agent>& in_lhs_host, thrust::host_ve
 		//test_interaction_step(in_lhs_host, in_rhs_host, verbose, ins_type, print_final_net, pause);
 	//	soa::interaction_loop( l_ids, l_names, l_arities, l_p1s, l_p2s, l_p3s, l_p4s,r_ids, r_names, r_arities, r_p1s, r_p2s, r_p3s, r_p4s, verbose, print_final_net);
 
-	StopWatch::get(mywatch).stop();
+	mywatch.lap();
 
 	// stop and destroy timer
-	float time_elapsed = StopWatch::get(mywatch).getTime() / 1000.0;
+	float time_elapsed = mywatch.elapsed() / 1000.0;
 	printf ("elapsed time %.5f seconds.\n------------------\n", time_elapsed);
-	StopWatch::destroy(mywatch);
 
 	std::cout << "total loops: " << rinfo.num_loops << std::endl;
 	std::cout << "total interactions: " << rinfo.total_interactions << " ( " << ( static_cast<float>(rinfo.total_interactions / time_elapsed)) << " / sec )"  << std::endl;
@@ -93,7 +92,7 @@ void eval_all(vector < thrust::host_vector<ingpu::Agent> >& in_lhs_vector, vecto
 		eval_single(in_lhs_vector[i], in_rhs_vector[i]);
 		if (pause_between_inputs) {
 			std::cout << "press any key to continue\n";
-			getch();
+			// getch();
 		}
 	}
 }
@@ -119,8 +118,7 @@ void eval_single_soa(host_vector<soa::id_type>& l_ids, host_vector<soa::name_typ
 	const int ruleset = config_manager::get_int("ruleset");
 
 	//timer
-	const unsigned int mywatch = StopWatch::create();
-	StopWatch::get(mywatch).start();
+	auto mywatch = Stopwatch();
 
 	/* ----------------
 	// interaction loop
@@ -130,12 +128,11 @@ void eval_single_soa(host_vector<soa::id_type>& l_ids, host_vector<soa::name_typ
 	//	test_interaction_step(in_lhs_host, in_rhs_host, verbose, ins_type, print_final_net);
 		soa::interaction_loop(ruleset, l_ids, l_names, l_arities, l_p1s, l_p2s, l_p3s, l_p4s,r_ids, r_names, r_arities, r_p1s, r_p2s, r_p3s, r_p4s, verbose, print_final_net, pause);
 
-	StopWatch::get(mywatch).stop();
+	mywatch.lap();
 
 	// stop and destroy timer
-	float time_elapsed = StopWatch::get(mywatch).getTime() / 1000.0;
+	float time_elapsed = mywatch.elapsed() / 1000.0;
 	printf ("elapsed time %.5f seconds.\n------------------\n", time_elapsed);
-	StopWatch::destroy(mywatch);
 
 	std::cout << "total loops: " << rinfo.num_loops << std::endl;
 	std::cout << "total interactions: " << rinfo.total_interactions << " ( " << ( static_cast<float>(rinfo.total_interactions / time_elapsed)) << " / sec )"  << std::endl;
@@ -407,7 +404,7 @@ int main()
 	//std::cout << "result (number of S symbols): " << rinfo.result << std::endl;
 
 	std::cout << "press any key to continue...\n";
-	getch();
+	// getch();
 
 	return 0;
 }

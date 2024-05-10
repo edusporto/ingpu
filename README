@@ -4,6 +4,9 @@ ingpu - an experimental GPU-based interaction nets evaluator
 author: Eugen Jiresch
 for any comments, suggestions, feedback, please send an email to: jiresch (at) logic . at
 
+NOTE: If running the new version on Linux:
+- Requires CMake and CUDA
+- Run `build.sh`
 
 Requirements:
 -------------

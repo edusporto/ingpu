@@ -1,6 +1,6 @@
 #pragma once
 
-#include <thrust\host_vector.h>
+#include <thrust/host_vector.h>
 #include "agent_struct.h"
 #include "result_info.h"
 
